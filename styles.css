@@ -1,1 +1,60 @@
+:root{
+  --taskbar-width:72px;
+  --topbar-height:48px;
+  --bg:#0f1720;
+  --accent:#3b82f6;
+  --muted:#9ca3af;
+  --glass: rgba(255,255,255,0.02);
+}
 
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef8;background:#0b1220}
+
+/* Left taskbar */
+#taskbar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:var(--taskbar-width);
+  /* Removed gradient — use a solid background color for the taskbar */
+  background: var(--bg);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:8px 6px;
+  gap:8px;
+  border-right:1px solid rgba(255,255,255,0.02);
+  z-index:30;
+}
+#taskbar-top{display:flex;flex-direction:column;gap:6px;align-items:center;}
+#taskbar-bottom{display:flex;align-items:end;justify-content:center;padding-bottom:6px}
+
+/* Topbar */
+#topbar{
+  position:fixed;
+  left:var(--taskbar-width);
+  right:0;
+  top:0;
+  height:var(--topbar-height);
+  background:rgba(5,10,15,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  z-index:20;
+  border-bottom:1px solid rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+  color:var(--muted);
+}
+
+.topbar-left strong{font-weight:600}
+
+.topbar-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:13px}
+#clock{font-family:monospace;font-size:14px;color:#dbeafe}
+#date{font-size:12px;color:var(--muted)}
+
+@media (max-width:720px){
+  #taskbar{width:56px}
+  :root{--taskbar-width:56px}
+}
