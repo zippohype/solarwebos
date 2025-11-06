@@ -14,11 +14,11 @@
 
 <script>
 document.getElementById('loadBtn').addEventListener('click', () => {
-  if (document.querySelector('script[data-loaded="scriptjs"]')) return; // avoid double-load
+  if (document.querySelector('script[data-loaded="appjs"]')) return; // avoid double-load
   const s = document.createElement('script');
-  s.src = '/path/to/script.js';     // must be served by your server
+  s.src = '/path/to/app.js';     // must be served by your server
   s.async = false;                  // keep execution order if needed
-  s.dataset.loaded = 'scriptjs';
+  s.dataset.loaded = 'appjs';
   document.head.appendChild(s);
 });
 </script>
