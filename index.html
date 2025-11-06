@@ -1,1 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Left Taskbar + Topbar (apps removed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Left taskbar (apps removed) -->
+  <aside id="taskbar" aria-label="Left taskbar">
+    <div id="taskbar-top">
+      <!-- Intentionally left empty (apps removed) -->
+    </div>
 
+    <div id="taskbar-bottom">
+      <!-- Intentionally left empty (all-apps removed) -->
+    </div>
+  </aside>
+
+  <!-- Topbar -->
+  <header id="topbar" role="banner">
+    <div class="topbar-left">
+      <strong>MyShell</strong>
+    </div>
+    <div class="topbar-right" role="status" aria-live="polite">
+      <div id="clock">00:00:00</div>
+      <div id="date">Loading date…</div>
+    </div>
+  </header>
+
+  <script src="script.js"></script>
+</body>
+</html>
