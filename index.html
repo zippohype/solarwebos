@@ -10,6 +10,18 @@
   <!-- Left taskbar (apps removed) -->
   <aside id="taskbar" aria-label="Left taskbar">
     <div id="taskbar-top">
+      <button id="loadBtn">Load script.js</button>
+
+<script>
+document.getElementById('loadBtn').addEventListener('click', () => {
+  if (document.querySelector('script[data-loaded="scriptjs"]')) return; // avoid double-load
+  const s = document.createElement('script');
+  s.src = '/path/to/script.js';     // must be served by your server
+  s.async = false;                  // keep execution order if needed
+  s.dataset.loaded = 'scriptjs';
+  document.head.appendChild(s);
+});
+</script>
       <!-- Intentionally left empty (apps removed) -->
     </div>
 
