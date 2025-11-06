@@ -3,30 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Solaros Web 1</title>
+  <title>Solarwebos</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Left taskbar (apps removed) -->
+  <!-- Left taskbar -->
   <aside id="taskbar" aria-label="Left taskbar">
     <div id="taskbar-top">
-      <button id="loadBtn">Load script.js</button>
-
-<script>
-document.getElementById('loadBtn').addEventListener('click', () => {
-  if (document.querySelector('script[data-loaded="appjs"]')) return; // avoid double-load
-  const s = document.createElement('script');
-  s.src = '/path/to/app.js';     // must be served by your server
-  s.async = false;                  // keep execution order if needed
-  s.dataset.loaded = 'appjs';
-  document.head.appendChild(s);
-});
-</script>
-      <!-- Intentionally left empty (apps removed) -->
+      <div id="app-list" role="list"></div>
     </div>
 
     <div id="taskbar-bottom">
-      <!-- Intentionally left empty (all-apps removed) -->
+      <!-- kept empty intentionally -->
     </div>
   </aside>
 
@@ -36,10 +24,13 @@ document.getElementById('loadBtn').addEventListener('click', () => {
       <strong>MyShell</strong>
     </div>
     <div class="topbar-right" role="status" aria-live="polite">
-      <div id="clock">00:00</div>
-      <div id="date">Please wait</div>
+      <div id="clock">00:00:00</div>
+      <div id="date">Loading date…</div>
     </div>
   </header>
+
+  <!-- Main workspace -->
+  <main id="workspace" tabindex="-1" role="main"></main>
 
   <script src="script.js"></script>
 </body>
