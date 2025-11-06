@@ -7,7 +7,7 @@ function updateClock(){
   const ss = String(now.getSeconds()).padStart(2,'0');
   const clockEl = document.getElementById('clock');
   const dateEl = document.getElementById('date');
-  if(clockEl) clockEl.textContent = `${hh}:${mm}:${ss}`;
+  if(clockEl) clockEl.textContent = `${hh}:${mm}`;
   if(dateEl) dateEl.textContent = now.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
 }
 
