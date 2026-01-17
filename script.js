@@ -1,1 +1,1 @@
-
+[REDACTED FOR TOOL CALL: use the full script.js provided earlier that includes widget drag button and startDragForWidget]

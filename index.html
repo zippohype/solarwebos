@@ -3,69 +3,207 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SolarOS web</title>
-  <link rel="stylesheet" href="styles.css">
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mini Desktop OS</title>
+  <title>SolarOS — KDE Plasma Style</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="desktop" class="desktop">
-    <!-- Background wallpaper -->
-    <div id="wallpaper" class="wallpaper"></div>
+  <div id="desktop" role="application" aria-label="Desktop">
+    <div id="wallpaper" aria-hidden="true"></div>
 
-    <!-- Start menu -->
-    <div id="start-menu" class="start-menu hidden" role="menu" aria-label="Start menu">
-      <div class="start-search">
-        <input id="start-search-input" placeholder="Search apps..." aria-label="Search apps" />
+    <div id="desktop-icons" class="icons-grid" aria-hidden="false">
+      <div class="icon" data-app="file-manager" tabindex="0">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+        <div class="label">Home</div>
       </div>
-      <div class="start-list" id="start-list" role="list"></div>
+
+      <div class="icon" data-app="settings" tabindex="0">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 1 0 0-8zM4.94 6.94 3.52 5.52 2 7l1.41 1.41A7.97 7.97 0 0 0 4.94 6.94zM19.06 17.06 20.48 18.48 22 17l-1.41-1.41A7.97 7.97 0 0 0 19.06 17.06z"/></svg>
+        <div class="label">Settings</div>
+      </div>
     </div>
 
-    <!-- Taskbar -->
-    <div id="taskbar" class="taskbar" role="navigation" aria-label="Taskbar">
-      <div class="taskbar-left">
-        <button id="start-button" class="start-button" aria-label="Start">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-            <rect x="3" y="3" width="8" height="8" fill="white" />
-            <rect x="13" y="3" width="8" height="8" fill="white" opacity="0.85"/>
-            <rect x="3" y="13" width="8" height="8" fill="white" opacity="0.6"/>
-            <rect x="13" y="13" width="8" height="8" fill="white" opacity="0.4"/>
-          </svg>
+    <!-- Widgets container (anchored to right) -->
+    <div id="widgets" aria-live="polite"></div>
+
+    <!-- Window container -->
+    <div id="windows"></div>
+
+    <!-- Bottom panel (KDE-style) -->
+    <div id="panel" role="toolbar" aria-label="Panel">
+      <div id="panel-left" class="panel-section">
+        <button id="start-button" aria-haspopup="true" aria-controls="launcher" title="Application Launcher">
+          <svg viewBox="0 0 24 24" class="start-icon"><path fill="currentColor" d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5-10 5-10-5z"/></svg>
+        </button>
+
+        <div id="panel-widgets" class="panel-widgets" aria-hidden="true"></div>
+
+        <div id="taskbar" class="taskbar" role="list" aria-label="Open applications"></div>
+      </div>
+
+      <div id="panel-center" class="panel-section"></div>
+
+      <div id="panel-right" class="panel-section">
+        <div id="system-tray" class="tray" role="group" aria-label="System tray">
+          <button id="tray-ctrl" title="Notifications" aria-label="Notifications">•</button>
+          <button id="widgets-button" title="Widgets" aria-haspopup="true" aria-controls="widgets-menu" aria-expanded="false">▣</button>
+          <button id="panel-customize-button" title="Customize Panel" aria-haspopup="true" aria-controls="panel-customizer" aria-expanded="false">⚙</button>
+          <div id="clock" class="clock" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application launcher -->
+    <div id="launcher" role="menu" aria-hidden="true">
+      <div class="launcher-grid" role="list">
+        <button class="app-tile" data-app="file-manager" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+          <div class="tile-label">Files</div>
+        </button>
+
+        <button class="app-tile" data-app="terminal" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6h16v12H4zM6 9l3 3-3 3"/></svg>
+          <div class="tile-label">Terminal</div>
+        </button>
+
+        <button class="app-tile" data-app="system-monitor" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M3 13h4v6H3v-6zm6-10h4v16h-4V3zm6 6h4v10h-4V9z"/></svg>
+          <div class="tile-label">System Monitor</div>
+        </button>
+
+        <button class="app-tile" data-app="discover" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3 7h7l-5.5 4 2 7L12 16 5.5 20l2-7L2 9h7z"/></svg>
+          <div class="tile-label">Discover</div>
+        </button>
+
+        <button class="app-tile" data-app="browser" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2z"/></svg>
+          <div class="tile-label">Browser</div>
+        </button>
+
+        <button class="app-tile" data-app="text-editor" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6z"/></svg>
+          <div class="tile-label">Text Editor</div>
+        </button>
+
+        <button class="app-tile" data-app="calculator" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10v20H7z"/></svg>
+          <div class="tile-label">Calculator</div>
+        </button>
+
+        <button class="app-tile" data-app="notes" role="menuitem">
+          <svg class="tile-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h14v14H3zM5 5v10h10V5H5z"/></svg>
+          <div class="tile-label">Notes</div>
         </button>
       </div>
 
-      <div id="taskbar-center" class="taskbar-center" role="toolbar" aria-label="Running apps"></div>
-
-      <div class="taskbar-right">
-        <div id="clock" class="clock" aria-live="polite"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Alt-Tab overlay -->
-  <div id="altTabOverlay" class="alt-tab hidden" aria-hidden="true"></div>
-
-  <!-- Window template (cloned by JS) -->
-  <template id="window-template">
-    <div class="window" role="dialog" aria-label="window">
-      <div class="window-header" tabindex="0">
-        <div class="window-title"></div>
-        <div class="window-controls">
-          <button class="btn-min" title="Minimize" aria-label="Minimize">—</button>
-          <button class="btn-max" title="Maximize" aria-label="Maximize">☐</button>
-          <button class="btn-close" title="Close" aria-label="Close">✕</button>
+      <div class="launcher-footer">
+        <div class="launcher-search">
+          <input id="launcher-search" placeholder="Search apps..." aria-label="Search apps">
         </div>
       </div>
-      <div class="window-body"></div>
-      <div class="resize-handle" aria-hidden="true"></div>
     </div>
-  </template>
 
-  <script src="app.js"></script>
+    <!-- Widgets drawer (left) - theme-synced background -->
+    <div id="widgets-menu" role="dialog" aria-hidden="true" aria-modal="true">
+      <div class="widgets-menu-inner">
+        <header class="widgets-menu-header">
+          <div class="wm-title">Add Widgets</div>
+          <button id="widgets-close" aria-label="Close">✕</button>
+        </header>
+
+        <div class="widgets-library grid">
+          <div class="widget-library-item">
+            <div class="wl-title">Digital Clock</div>
+            <div class="wl-desc">A clock widget with time &amp; date.</div>
+            <button class="wl-add" data-widget="clock">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Weather</div>
+            <div class="wl-desc">Simple weather placeholder (replace with API).</div>
+            <button class="wl-add" data-widget="weather">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Notes</div>
+            <div class="wl-desc">Quick sticky notes.</div>
+            <button class="wl-add" data-widget="notes">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">System Monitor</div>
+            <div class="wl-desc">CPU / memory placeholders.</div>
+            <button class="wl-add" data-widget="cpu">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Calendar</div>
+            <div class="wl-desc">Monthly calendar view.</div>
+            <button class="wl-add" data-widget="calendar">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Battery</div>
+            <div class="wl-desc">Shows battery state (if available).</div>
+            <button class="wl-add" data-widget="battery">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Media Player</div>
+            <div class="wl-desc">Play/pause media controls (placeholder).</div>
+            <button class="wl-add" data-widget="media">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Network</div>
+            <div class="wl-desc">Shows online/offline and connection info.</div>
+            <button class="wl-add" data-widget="network">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">RSS Feed</div>
+            <div class="wl-desc">Latest headlines (placeholder).</div>
+            <button class="wl-add" data-widget="rss">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Todo</div>
+            <div class="wl-desc">Simple todo list widget.</div>
+            <button class="wl-add" data-widget="todo">Add</button>
+          </div>
+
+          <div class="widget-library-item">
+            <div class="wl-title">Photo Slideshow</div>
+            <div class="wl-desc">Cycle through a small gallery.</div>
+            <button class="wl-add" data-widget="photo">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel customizer -->
+    <div id="panel-customizer" role="dialog" aria-hidden="true" aria-modal="true">
+      <div class="pc-inner">
+        <header class="pc-header">
+          <div class="pc-title">Panel Settings</div>
+          <button id="panel-customizer-close" aria-label="Close">✕</button>
+        </header>
+
+        <div class="pc-content">
+          <label><input type="checkbox" id="pc-panel-widgets"> Show panel widgets</label>
+          <div class="pc-appearance">
+            <div>Appearance</div>
+            <label><input type="radio" name="pc-theme" value="dark"> Dark</label>
+            <label><input type="radio" name="pc-theme" value="light"> Light</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
