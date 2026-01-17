@@ -105,7 +105,7 @@
       </div>
     </div>
 
-    <!-- Widgets drawer (left) - theme-synced background -->
+    <!-- Widgets drawer (left) -->
     <div id="widgets-menu" role="dialog" aria-hidden="true" aria-modal="true">
       <div class="widgets-menu-inner">
         <header class="widgets-menu-header">
@@ -114,6 +114,7 @@
         </header>
 
         <div class="widgets-library grid">
+          <!-- same items as before -->
           <div class="widget-library-item">
             <div class="wl-title">Digital Clock</div>
             <div class="wl-desc">A clock widget with time &amp; date.</div>
@@ -122,7 +123,7 @@
 
           <div class="widget-library-item">
             <div class="wl-title">Weather</div>
-            <div class="wl-desc">Simple weather placeholder (replace with API).</div>
+            <div class="wl-desc">Uses Open-Meteo; requests geolocation.</div>
             <button class="wl-add" data-widget="weather">Add</button>
           </div>
 
@@ -152,7 +153,7 @@
 
           <div class="widget-library-item">
             <div class="wl-title">Media Player</div>
-            <div class="wl-desc">Play/pause media controls (placeholder).</div>
+            <div class="wl-desc">Play/pause controls (placeholder).</div>
             <button class="wl-add" data-widget="media">Add</button>
           </div>
 
@@ -161,49 +162,9 @@
             <div class="wl-desc">Shows online/offline and connection info.</div>
             <button class="wl-add" data-widget="network">Add</button>
           </div>
-
-          <div class="widget-library-item">
-            <div class="wl-title">RSS Feed</div>
-            <div class="wl-desc">Latest headlines (placeholder).</div>
-            <button class="wl-add" data-widget="rss">Add</button>
-          </div>
-
-          <div class="widget-library-item">
-            <div class="wl-title">Todo</div>
-            <div class="wl-desc">Simple todo list widget.</div>
-            <button class="wl-add" data-widget="todo">Add</button>
-          </div>
-
-          <div class="widget-library-item">
-            <div class="wl-title">Photo Slideshow</div>
-            <div class="wl-desc">Cycle through a small gallery.</div>
-            <button class="wl-add" data-widget="photo">Add</button>
-          </div>
         </div>
       </div>
     </div>
-
-    <!-- Panel customizer -->
-    <div id="panel-customizer" role="dialog" aria-hidden="true" aria-modal="true">
-      <div class="pc-inner">
-        <header class="pc-header">
-          <div class="pc-title">Panel Settings</div>
-          <button id="panel-customizer-close" aria-label="Close">✕</button>
-        </header>
-
-        <div class="pc-content">
-          <label><input type="checkbox" id="pc-panel-widgets"> Show panel widgets</label>
-          <div class="pc-appearance">
-            <div>Appearance</div>
-            <label><input type="radio" name="pc-theme" value="dark"> Dark</label>
-            <label><input type="radio" name="pc-theme" value="light"> Light</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
-
-  <script src="script.js" defer></script>
 </body>
 </html>
