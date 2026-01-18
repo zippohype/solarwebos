@@ -1,1 +1,152 @@
-[REDACTED FOR TOOL CALL: use the full styles.css provided earlier with mountain wallpaper and theme variables]
+:root{
+  --bg:#0b1220;
+  --accent:#2aa1ff;
+  --accent-2:#4fc3f7;
+  --panel-bg-dark: rgba(20,24,30,0.6);
+  --panel-blur: 10px;
+  --window-bg-dark: #000000; /* fully black for dark theme */
+  --surface: rgba(255,255,255,0.04);
+  --text: #e6eef6;
+  --muted: #96a3b8;
+  --glass-border-dark: rgba(255,255,255,0.06);
+
+  --panel-bg-light: rgba(255,255,255,0.88);
+  --glass-border-light: rgba(2,6,23,0.06);
+  --window-bg-light: #ffffff;
+  --text-light: #072033;
+  --muted-light: #425264;
+
+  --widgets-menu-bg-dark: rgba(12,16,22,0.86);
+  --widgets-menu-text-dark: #e6eef6;
+  --widgets-menu-bg-light: rgba(255,255,255,0.96);
+  --widgets-menu-text-light: #072033;
+
+  font-size: 14px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+body[data-theme="light"] {
+  --panel-bg: var(--panel-bg-light);
+  --glass-border: var(--glass-border-light);
+  --text: var(--text-light);
+  --muted: var(--muted-light);
+  --bg: linear-gradient(180deg,#f7fafc,#eef6fb);
+  --widgets-menu-bg: var(--widgets-menu-bg-light);
+  --widgets-menu-text: var(--widgets-menu-text-light);
+  --window-bg: var(--window-bg-light);
+}
+body:not([data-theme="light"]) {
+  --panel-bg: var(--panel-bg-dark);
+  --glass-border: var(--glass-border-dark);
+  --widgets-menu-bg: var(--widgets-menu-bg-dark);
+  --widgets-menu-text: var(--widgets-menu-text-dark);
+  --window-bg: var(--window-bg-dark);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+
+#wallpaper{
+  position:fixed; inset:0; z-index:0;
+  background-image:
+    radial-gradient(1200px 600px at 10% 20%, rgba(76,195,247,0.04), transparent 10%),
+    radial-gradient(900px 500px at 90% 80%, rgba(42,161,255,0.03), transparent 10%),
+    linear-gradient(180deg, rgba(7,16,34,0.22), rgba(11,18,32,0.22)),
+    url('/assets/mountain.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  filter: saturate(1.05);
+}
+
+#desktop-icons{position:fixed; left:16px; top:16px; z-index:2; display:flex; flex-direction:column; gap:20px}
+.icons-grid{display:grid; gap:14px; grid-auto-rows:80px}
+.icon{width:84px; text-align:center; color:var(--text); cursor:pointer; user-select:none}
+.icon .icon-svg{width:44px; height:44px; color:var(--accent); margin:0 auto 6px; opacity:0.98}
+.icon .label{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+#panel{
+  position:fixed; left:12px; right:12px; bottom:12px; height:56px; display:flex;
+  align-items:center; justify-content:space-between; gap:12px; z-index:40;
+  background:var(--panel-bg); border-radius:12px; padding:6px 12px;
+  backdrop-filter: blur(var(--panel-blur)); border:1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.35);
+}
+.panel-section{display:flex; align-items:center; gap:12px}
+#start-button{background:transparent;color:var(--text);border:none;width:44px;height:44px;border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.start-icon{width:22px;height:22px;color:var(--accent)}
+
+.taskbar{display:flex; gap:8px; align-items:center}
+.taskbar .task{min-width:88px;height:40px;display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer}
+.taskbar .task.active{background:linear-gradient(90deg, rgba(42,161,255,0.08), rgba(79,195,247,0.04)); color:var(--text); box-shadow: inset 0 -1px rgba(255,255,255,0.02)}
+
+.tray{display:flex; gap:10px; align-items:center}
+#widgets-button,#panel-customize-button{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:8px;border-radius:8px}
+#widgets-button[aria-expanded="true"], #panel-customize-button[aria-expanded="true"]{background:rgba(0,0,0,0.04); color:var(--text)}
+.clock{font-weight:600; color:var(--muted)}
+
+#launcher{position:fixed; left:12px; bottom:78px; width:480px; max-width:calc(100% - 48px); z-index:60; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:14px; backdrop-filter: blur(10px); border:1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(2,6,23,0.6); display:none;}
+#launcher[aria-hidden="false"]{display:block}
+.launcher-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.app-tile{background:transparent;border:none;padding:10px;border-radius:8px;color:var(--text);cursor:pointer;text-align:left;display:flex;gap:12px;align-items:center}
+.tile-icon{width:34px;height:34px;color:var(--accent)}
+.tile-label{font-weight:600}
+.launcher-footer{margin-top:12px;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px}
+.launcher-search input{width:100%;padding:10px;border-radius:8px;border:none;background:var(--surface);color:var(--text)}
+
+#widgets-menu{position:fixed; left:12px; top:12px; bottom:12px; width:360px; max-width:92vw; z-index:80; display:none;background: var(--widgets-menu-bg); color: var(--widgets-menu-text); backdrop-filter: blur(12px); border-radius:12px; border:1px solid var(--glass-border); box-shadow: 0 12px 40px rgba(2,6,23,0.25); overflow:auto;}
+#widgets-menu[aria-hidden="false"]{display:block}
+.widgets-menu-inner{padding:16px; display:flex; flex-direction:column; gap:12px; height:100%}
+.widgets-menu-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:6px}
+.widgets-menu-header .wm-title{font-weight:700;font-size:18px}
+.widgets-menu-header button{background:transparent;border:none;font-size:18px;cursor:pointer;color:inherit}
+.widgets-library.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px}
+.widget-library-item{padding:14px;border-radius:10px;background:rgba(255,255,255,0.02);box-shadow:none}
+.wl-title{font-weight:700}
+.wl-desc{font-size:13px;color:var(--muted);margin:6px 0}
+.wl-add{padding:8px 10px;border-radius:8px;border:none;background:var(--accent-2);color:#042231;cursor:pointer}
+
+#panel-customizer{position:fixed; right:12px; bottom:78px; width:320px; z-index:90; display:none; background:var(--panel-bg); border-radius:12px; padding:12px; backdrop-filter: blur(8px); border:1px solid var(--glass-border);} #panel-customizer[aria-hidden="false"]{display:block}
+.pc-inner{display:flex;flex-direction:column;gap:12px}
+.pc-header{display:flex;align-items:center;justify-content:space-between}
+.pc-title{font-weight:700}
+.pc-content label{display:block;margin:8px 0}
+.pc-appearance{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+
+#widgets{position:fixed; top:0; bottom:0; right:12px; width:auto; pointer-events:none; z-index:50}
+.widget{position:absolute; width:240px; min-height:80px; pointer-events:auto; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:8px; border:1px solid var(--glass-border); overflow:hidden; color:var(--text); box-shadow: 0 10px 30px rgba(2,6,23,0.45); display:flex; align-items:stretch; transition:transform .12s, left .08s, top .08s;}
+.widget:active{transform:scale(0.995)}
+.widget .w-left-controls{position:absolute; left:6px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:6px; opacity:0; transition:opacity .18s; z-index:5;}
+.widget:hover .w-left-controls{opacity:1}
+.widget .w-left-controls .w-btn{width:34px;height:34px;border-radius:6px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+.widget .content{padding:12px;font-size:13px;color:var(--muted);flex:1;overflow:auto}
+.widget .resizer{position:absolute; right:6px; bottom:6px; width:12px; height:12px; cursor:se-resize; opacity:0.6}
+
+/* Windows: solid background based on theme */
+.window{position:absolute;width:720px;max-width:95vw;height:480px;max-height:85vh;background:var(--window-bg);color:var(--text);border-radius:10px;border:1px solid var(--glass-border);box-shadow:0 20px 40px rgba(2,6,23,0.6);overflow:hidden;display:flex;flex-direction:column;z-index:6}
+.titlebar{height:44px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;align-items:center;gap:12px;padding:0 12px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.titlebar .title{flex:1;font-weight:600}
+.titlebar .controls{display:flex;gap:8px}
+.ctrl{width:36px;height:32px;border-radius:6px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+.ctrl:hover{background:rgba(255,255,255,0.02);color:var(--text)}
+.window .content{padding:14px;color:var(--muted);overflow:auto;flex:1}
+
+@media (max-width:760px){
+  #panel{left:8px;right:8px;bottom:8px;border-radius:10px;height:56px}
+  #launcher{left:8px;right:8px;width:auto;bottom:72px}
+  #widgets-menu{left:0;right:0;top:0;bottom:0;width:100vw;border-radius:0;max-width:100vw}
+  .widgets-menu-inner{margin:0;padding:18px;height:100%;overflow:auto}
+  .widget{width:88vw;left:6vw !important;right:6vw !important;}
+  #widgets{right:6vw}
+  #desktop-icons{left:10px;top:10px}
+}
+
+button,input,textarea{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
